@@ -13,7 +13,7 @@ export default function App() {
             OUTPUT
           </div>
           <div className="h-full">
-            <div className="relative h-full">
+            <div className="relative h-full overflow-auto">
               <Ouput />
             </div>
           </div>
