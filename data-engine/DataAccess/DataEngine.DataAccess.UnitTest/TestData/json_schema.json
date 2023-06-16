@@ -1,0 +1,40 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "test_model",
+  "type": "object",
+  "properties": {
+    "Date": {
+      "type": "none",
+      "description": null
+    },
+    "SDate": {
+      "type": "none",
+      "description": null
+    },
+    "EDate": {
+      "type": "none",
+      "description": null
+    },
+    "EquipmentClass": {
+      "type": "none",
+      "description": null
+    },
+    "GroupLevel": {
+      "type": "none",
+      "description": null
+    },
+    "EquipmentName": {
+      "type": "none",
+      "description": null
+    },
+    "TmStatus": {
+      "type": "none",
+      "description": null
+    },
+    "TmReason": {
+      "type": "none",
+      "description": null
+    }
+  },
+  "required": []
+}

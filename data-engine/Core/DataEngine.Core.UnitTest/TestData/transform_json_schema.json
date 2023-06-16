@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "test_model",
+  "type": "object",
+  "properties": {
+    "StartDate": {
+      "type": "date-time"
+    },
+    "EndDate": {
+      "type": "date-time"
+    },
+    "EquipmentClass": {
+      "type": "string"
+    },
+    "GroupLevel": {
+      "type": "string"
+    },
+    "EquipmentName": {
+      "type": "string"
+    },
+    "TmStatus": {
+      "type": "string"
+    },
+    "TmReason": {
+      "type": "string"
+    },
+    "Category": {
+      "type": "string"
+    }
+  }
+}

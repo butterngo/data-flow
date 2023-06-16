@@ -1,0 +1,65 @@
+﻿using DataEngine.Abstraction;
+using DataEngine.Abstraction.Models;
+using DataEngine.Core.DataBlocks.Interfaces;
+using Newtonsoft.Json;
+using System.Threading.Tasks.Dataflow;
+
+namespace DataEngine.Core.DataBlocks;
+
+public class FilteringProperty
+{
+    [JsonProperty("type")]
+    public ConditionEnum Type { get; set; }
+    [JsonProperty("field")]
+    public string Field { get; set; }
+    [JsonProperty("value")]
+    public string Value { get; set; }
+}
+
+public class FilteringDataBlock : DataBlockBase, IFilteringDataBlock
+{
+    public FilteringProperty Property { get; set; }
+
+    public FilteringDataBlock(IStateMachine stateMachine) : base(stateMachine)
+    {
+    }
+
+    protected override IDataflowBlock CreateBlock()
+        => new TransformBlock<IRowDataModel, IRowDataModel>(model =>
+        {
+            if (WhereIterator(model)) return model;
+
+            return null;
+        }, ExecutionOptions);
+
+    private bool WhereIterator(IRowDataModel model)
+    {
+        if (Property == null) return true;
+
+        var item = model[Property.Field];
+
+        if (item == null)
+        {
+            model.Errors.Add($"Filtering Flow is not found ${Property.Field}");
+            return true;
+        }
+
+        switch (Property.Type)
+        {
+            case ConditionEnum.Equal: return item.Value.Equals(Property.Value);
+            case ConditionEnum.NotEqual: return !item.Value.Equals(Property.Value);
+            default: return true;
+        }
+    }
+
+    protected override bool Predicate(IRowDataModel model) 
+    {
+        if (model == null) 
+        {
+            return false;
+        }
+
+        return true;
+    }
+    
+}
