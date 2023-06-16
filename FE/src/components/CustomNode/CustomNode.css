@@ -1,0 +1,3 @@
+.react-flow__node.selected .custom-node {
+    border: 1px solid var(--etlHover) !important;
+}

@@ -1,0 +1,14 @@
+
+.block-modal .ant-modal-content, .block-modal .ant-modal-header {
+    background-color: var(--node);
+}
+
+.block-modal .ant-modal-close {
+  color: white;
+  
+}
+
+.block-modal .ant-modal-close:hover {
+  background-color: var(--etlBlock);
+  color: white;
+}
