@@ -1,5 +1,6 @@
 import ReactFlow from "@/components/ReactFlow";
 import Ouput from "@/components/Output";
+import Logs from "@/components/Logs";
 
 export default function App() {
   return (
@@ -22,7 +23,9 @@ export default function App() {
           <div className="text-white font-bold h-12 border-l border-etlBorder border-b border-b-etlBorder p-3">
             LOGS
           </div>
-          <div className="h-full border-l border-l-etlBorder"></div>
+          <div className="h-full border-l border-l-etlBorder">
+            <Logs />
+          </div>
         </div>
       </div>
     </div>
