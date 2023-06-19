@@ -60,6 +60,9 @@ namespace DataEngine.Abstraction.Models
             return sb.ToString();
         }
 
+        public Dictionary<string, object> Deserialize() => JsonConvert.DeserializeObject<Dictionary<string, object>>(Serialize());
+        
+
         public void SetValue(IValueModel value)
         {
             if (!string.IsNullOrEmpty(value.Error))

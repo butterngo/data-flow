@@ -1,9 +1,9 @@
-﻿using DataEngine.DataAccess.Abstraction;
-using System.Linq;
+﻿using System.Linq;
 using System.Collections.Generic;
 using System.IO;
 using DataEngine.Abstraction.Models;
 using System.Threading;
+using DataEngine.Abstraction.Interfaces;
 
 namespace DataEngine.DataAccess.CSV
 {
@@ -17,11 +17,11 @@ namespace DataEngine.DataAccess.CSV
 
         public IJsonSchemaModel JsonSchema { get; private set; }
 
-        public CsvDataInputProvider(FileStream stream) 
+        public CsvDataInputProvider(Stream stream) 
         {
             _stream = stream;
             _reader = new StreamReader(_stream);
-            SetJsonSchema(stream.Name);
+            SetJsonSchema();
         }
 
         public IEnumerable<IRowDataModel> GetData(CancellationToken cancellationToken)
@@ -57,7 +57,7 @@ namespace DataEngine.DataAccess.CSV
             throw new System.NotImplementedException();
         }
 
-        private void SetJsonSchema(string title)
+        private void SetJsonSchema()
         {
             var line = _reader.ReadLine();
 
@@ -65,7 +65,7 @@ namespace DataEngine.DataAccess.CSV
 
             JsonSchema = new JsonSchemaModel
             {
-                Title = title,
+                Title = "ModelInput",
                 Properties = fields.Select(name => new PropertyModel(name))
             };
         }

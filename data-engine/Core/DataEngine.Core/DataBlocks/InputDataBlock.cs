@@ -1,4 +1,4 @@
-﻿using DataEngine.Abstraction;
+﻿using DataEngine.Abstraction.Interfaces;
 using DataEngine.Abstraction.Models;
 using DataEngine.Core.DataBlocks.Interfaces;
 using System.Threading.Tasks.Dataflow;
@@ -9,7 +9,7 @@ public class InputDataBlock : DataBlockBase, IInputDataBlock
 {
     private int _rowIndex = 1;
 
-    public InputDataBlock(IStateMachine stateMachine) 
+    public InputDataBlock(IDataPipeline stateMachine) 
         : base(stateMachine)
     {
     }
@@ -29,5 +29,5 @@ public class InputDataBlock : DataBlockBase, IInputDataBlock
 
     protected override IDataflowBlock CreateBlock() => new BufferBlock<IRowDataModel>(ExecutionOptions);
 
-    protected override bool Predicate(IRowDataModel model) => true;
+    protected override bool OnPredicate(IRowDataModel model) => true;
 }

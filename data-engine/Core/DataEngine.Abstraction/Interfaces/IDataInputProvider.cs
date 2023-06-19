@@ -1,9 +1,6 @@
 ﻿using DataEngine.Abstraction.Models;
-using System;
-using System.Collections.Generic;
-using System.Threading;
 
-namespace DataEngine.DataAccess.Abstraction
+namespace DataEngine.Abstraction.Interfaces
 {
     public interface IDataInputProvider : IDisposable
     {

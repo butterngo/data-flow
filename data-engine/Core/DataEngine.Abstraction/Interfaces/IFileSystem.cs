@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 
-namespace DataEngine.Abstraction
+namespace DataEngine.Abstraction.Interfaces
 {
     public interface IFileSystem
     {

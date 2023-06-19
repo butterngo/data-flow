@@ -6,6 +6,7 @@ using Newtonsoft.Json.Linq;
 using System;
 using System.IO;
 using System.Linq;
+using System.Threading;
 
 namespace DataEngine.DataAccess.UnitTest
 {
@@ -62,7 +63,7 @@ namespace DataEngine.DataAccess.UnitTest
 
             using (var dataPovider = new CsvDataInputProvider(fileStream))
             {
-                var result = dataPovider.GetData().ToList();
+                var result = dataPovider.GetData(CancellationToken.None).ToList();
 
                 result.Should().NotBeEmpty().And.HaveCount(28);
 

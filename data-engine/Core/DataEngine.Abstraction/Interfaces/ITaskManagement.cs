@@ -1,8 +1,8 @@
 ﻿using System.Threading;
 
-namespace DataEngine.Abstraction
+namespace DataEngine.Abstraction.Interfaces
 {
-    public interface ITaskManagement 
+    public interface ITaskManagement
     {
         CancellationToken this[string id] { get; }
         CancellationToken CreateToken(string id);

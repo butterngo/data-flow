@@ -1,4 +1,4 @@
-﻿using DataEngine.Abstraction;
+﻿using DataEngine.Abstraction.Interfaces;
 
 namespace DataEngine.Core.Services
 {

@@ -13,5 +13,6 @@ namespace DataEngine.Abstraction.Models
         string GenerateKey(string[] names);
         void SetValue(IValueModel value);
         string Serialize();
+        Dictionary<string, object> Deserialize();
     }
 }

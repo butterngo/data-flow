@@ -1,4 +1,5 @@
 ﻿using DataEngine.Abstraction;
+using DataEngine.Abstraction.Interfaces;
 using DataEngine.Abstraction.Models;
 using DataEngine.Core.DataBlocks.Interfaces;
 using Newtonsoft.Json;
@@ -8,8 +9,8 @@ namespace DataEngine.Core.DataBlocks;
 
 public class FilteringProperty
 {
-    [JsonProperty("type")]
-    public ConditionEnum Type { get; set; }
+    [JsonProperty("condition")]
+    public ConditionEnum Condition { get; set; }
     [JsonProperty("field")]
     public string Field { get; set; }
     [JsonProperty("value")]
@@ -18,9 +19,10 @@ public class FilteringProperty
 
 public class FilteringDataBlock : DataBlockBase, IFilteringDataBlock
 {
+    [JsonProperty("property")]
     public FilteringProperty Property { get; set; }
 
-    public FilteringDataBlock(IStateMachine stateMachine) : base(stateMachine)
+    public FilteringDataBlock(IDataPipeline stateMachine) : base(stateMachine)
     {
     }
 
@@ -44,7 +46,7 @@ public class FilteringDataBlock : DataBlockBase, IFilteringDataBlock
             return true;
         }
 
-        switch (Property.Type)
+        switch (Property.Condition)
         {
             case ConditionEnum.Equal: return item.Value.Equals(Property.Value);
             case ConditionEnum.NotEqual: return !item.Value.Equals(Property.Value);
@@ -52,7 +54,7 @@ public class FilteringDataBlock : DataBlockBase, IFilteringDataBlock
         }
     }
 
-    protected override bool Predicate(IRowDataModel model) 
+    protected override bool OnPredicate(IRowDataModel model) 
     {
         if (model == null) 
         {

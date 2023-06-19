@@ -1,7 +1,6 @@
-﻿using DataEngine.Abstraction;
+﻿using DataEngine.Abstraction.Interfaces;
 using DataEngine.Abstraction.Models;
 using DataEngine.Core.DataBlocks.Interfaces;
-using System;
 using System.Threading.Tasks.Dataflow;
 
 namespace DataEngine.Core.DataBlocks
@@ -11,18 +10,20 @@ namespace DataEngine.Core.DataBlocks
         public ITargetBlock<IRowDataModel> Target => Block as ITargetBlock<IRowDataModel>;
         protected ISourceBlock<IRowDataModel> Source => Block as ISourceBlock<IRowDataModel>;
         private IDataflowBlock Block { get; set; }
-        protected IStateMachine StateMachine { get; private set; }
+        protected IDataPipeline DataPipeline { get; private set; }
         protected ExecutionDataflowBlockOptions ExecutionOptions { get; private set; } = new();
 
-        protected DataBlockBase(IStateMachine stateMachine)
+        protected DataBlockBase(IDataPipeline dataPipeline)
         {
             Id = Guid.NewGuid().ToString();
-            StateMachine = stateMachine;
+            DataPipeline = dataPipeline;
             Block = CreateBlock();
             Name = this.GetType().Name;
         }
 
-        public string Id { get; private set; }
+        public string Id { get; set; }
+
+        public string LinkId { get; set; }
 
         public string Name { get; set; }
 
@@ -30,7 +31,21 @@ namespace DataEngine.Core.DataBlocks
 
         protected abstract IDataflowBlock CreateBlock();
 
-        protected abstract bool Predicate(IRowDataModel model);
+        protected abstract bool OnPredicate(IRowDataModel model);
+
+        private bool Predicate(IRowDataModel model) 
+        {
+            if (model != null)
+            {
+                DataPipeline.Publish(new StateMachineModel 
+                {
+                    Id = Id,
+                    Name= Name,
+                    Data = model,
+                });
+            }
+            return OnPredicate(model);
+        }
 
         public void LinkTo(IDataflowBlock block, DataflowLinkOptions linkOptions)
         {
@@ -38,6 +53,8 @@ namespace DataEngine.Core.DataBlocks
 
             if (dataBlock is not null)
             {
+                LinkId = dataBlock.Id;
+
                 Source.LinkTo(dataBlock.Target, linkOptions, Predicate);
             }
             else 
@@ -53,6 +70,5 @@ namespace DataEngine.Core.DataBlocks
         public void Fault(Exception exception) => Block.Fault(exception);
 
         public Task Completion => Block.Completion;
-
     }
 }

@@ -38,84 +38,78 @@ namespace DataEngine.Abstraction.Models
 
         public virtual void Write(JsonTextWriter writer)
         {
-            try 
+            writer.WritePropertyName(Property.Name);
+            switch (Property.Type)
             {
-                writer.WritePropertyName(Property.Name);
-                switch (Property.Type)
-                {
-                    case JsonObjectTypeEnum.None:
+                case JsonObjectTypeEnum.None:
+                    {
+                        writer.WriteValue(Value);
+                        break;
+                    }
+                case JsonObjectTypeEnum.Array:
+                    {
+                        throw new NotImplementedException("Not implemnet JsonObjectType.Array yet.");
+                    }
+                case JsonObjectTypeEnum.Boolean:
+                    {
+                        if (bool.TryParse(Value, out var result))
                         {
-                            writer.WriteValue(Value);
-                            break;
+                            writer.WriteValue(result);
                         }
-                    case JsonObjectTypeEnum.Array:
+                        break;
+                    }
+                case JsonObjectTypeEnum.Integer:
+                    {
+                        if (int.TryParse(Value, out var result))
                         {
-                            throw new NotImplementedException("Not implemnet JsonObjectType.Array yet.");
+                            writer.WriteValue(result);
                         }
-                    case JsonObjectTypeEnum.Boolean:
+                        break;
+                    }
+                case JsonObjectTypeEnum.Null:
+                    {
+                        writer.WriteValue(Value);
+                        break;
+                    }
+                case JsonObjectTypeEnum.Number:
+                    {
+                        if (double.TryParse(Value, out var result))
                         {
-                            if (bool.TryParse(Value, out var result))
-                            {
-                                writer.WriteValue(result);
-                            }
-                            break;
+                            writer.WriteValue(result);
                         }
-                    case JsonObjectTypeEnum.Integer:
+                        break;
+                    }
+                case JsonObjectTypeEnum.Object:
+                    {
+                        throw new NotImplementedException("Not implemnet JsonObjectType.Object yet.");
+                    }
+                case JsonObjectTypeEnum.String:
+                    {
+                        writer.WriteValue(Value);
+                        break;
+                    }
+                case JsonObjectTypeEnum.Date:
+                    {
+                        if (DateTime.TryParse(Value, out var result))
                         {
-                            if (int.TryParse(Value, out var result))
-                            {
-                                writer.WriteValue(result);
-                            }
-                            break;
+                            writer.WriteValue(result);
                         }
-                    case JsonObjectTypeEnum.Null:
+                        break;
+                    }
+                case JsonObjectTypeEnum.DateTime:
+                    {
+                        if (DateTime.TryParse(Value, out var result))
                         {
-                            writer.WriteValue(Value);
-                            break;
+                            writer.WriteValue(result);
                         }
-                    case JsonObjectTypeEnum.Number:
-                        {
-                            if (double.TryParse(Value, out var result))
-                            {
-                                writer.WriteValue(result);
-                            }
-                            break;
-                        }
-                    case JsonObjectTypeEnum.Object:
-                        {
-                            throw new NotImplementedException("Not implemnet JsonObjectType.Object yet.");
-                        }
-                    case JsonObjectTypeEnum.String:
-                        {
-                            writer.WriteValue(Value);
-                            break;
-                        }
-                    case JsonObjectTypeEnum.Date:
-                        {
-                            if (DateTime.TryParse(Value, out var result))
-                            {
-                                writer.WriteValue(result);
-                            }
-                            break;
-                        }
-                    case JsonObjectTypeEnum.DateTime:
-                        {
-                            if (DateTime.TryParse(Value, out var result))
-                            {
-                                writer.WriteValue(result);
-                            }
-                            break;
-                        }
-                    case JsonObjectTypeEnum.Time:
-                        {
-                            writer.WriteValue(Value);
-                            break;
-                        }
-                    default: throw new NotImplementedException($"Unknow Type {Property.Type.ToString()}");
-                }
-            }
-           catch(Exception ex) 
-            {
+                        break;
+                    }
+                case JsonObjectTypeEnum.Time:
+                    {
+                        writer.WriteValue(Value);
+                        break;
+                    }
+                default: throw new NotImplementedException($"Unknow Type {Property.Type.ToString()}");
             }
         }
     }

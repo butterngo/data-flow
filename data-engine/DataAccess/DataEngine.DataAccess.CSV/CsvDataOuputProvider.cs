@@ -1,5 +1,5 @@
-﻿using DataEngine.Abstraction.Models;
-using DataEngine.DataAccess.Abstraction;
+﻿using DataEngine.Abstraction.Interfaces;
+using DataEngine.Abstraction.Models;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;

@@ -1,0 +1,22 @@
+{
+  "InputDataBlock": {
+    "id": "4e3855e4-0c1b-11ee-be56-0242ac120002",
+    "name": "Load data from csv",
+    "linkId": "58c2b37e-0c1b-11ee-be56-0242ac120002"
+  },
+  "FilteringDataBlock": {
+    "id": "58c2b37e-0c1b-11ee-be56-0242ac120002",
+    "name": "Filter data Unknow",
+    "linkId": "6fda3908-0c1e-11ee-be56-0242ac120002",
+    "property": {
+      "field": "TmStatus",
+      "Value": "Unknow",
+      "condition": "NotEqual"
+    }
+  },
+  "OutputDataBlock": {
+    "id": "6fda3908-0c1e-11ee-be56-0242ac120002",
+    "name": "Sink data to console",
+    "linkId": null
+  }
+}

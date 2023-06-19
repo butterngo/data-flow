@@ -1,4 +1,5 @@
 using DataEngine.Abstraction;
+using DataEngine.Abstraction.Interfaces;
 using DataEngine.Abstraction.Models;
 using DataEngine.Core.DataBlocks;
 using DataEngine.DataAccess.CSV;
@@ -18,7 +19,7 @@ namespace DataEngine.Core.UnitTest.DataBlocks
 
             var dataProvider = new CsvDataInputProvider(stream);
             
-            var stateMachine = new Mock<IStateMachine>();
+            var stateMachine = new Mock<IDataPipeline>();
 
             var linkOptions = new DataflowLinkOptions { PropagateCompletion = true };
 
@@ -30,7 +31,7 @@ namespace DataEngine.Core.UnitTest.DataBlocks
                 {
                     Field = "TmStatus",
                     Value = "Unknow",
-                    Type = ConditionEnum.NotEqual
+                    Condition = ConditionEnum.NotEqual
                 }
             };
 
